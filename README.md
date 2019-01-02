@@ -1,4 +1,4 @@
-# ctis164-projects
+# Projects for CTIS 164
 The projects I made for the CTIS 164 - Technical Mathematics with Programming course.
 
 I normally don't like putting everything into a single file, however there was a single-file-only requirement: 
