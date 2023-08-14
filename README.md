@@ -4,8 +4,6 @@ The projects I made for the CTIS 164 Technical Mathematics with Programming.
 
 Note: Submitting a single `.cpp` was a requirement of the course.
 
-## Play
+## Run
 
-1. Download `starikcetin-technical-math-projects.zip`. Extract it.
-2. Read the `README.txt` file in the archive.
-3. Run the executables.
+Follow the instructions here: https://github.com/starikcetin/technical-math-projects/releases/tag/builds
