@@ -1,8 +1,11 @@
 # technical-math-projects
 
-The projects I made for the CTIS 164 Technical Mathematics with Programming.
+Small game and demo projects built with OpenGL, GLUT, and C++.
 
-Note: Submitting a single `.cpp` was a requirement of the course.
+My projects for CTIS 164 Technical Mathematics with Programming.
+
+> **Note**<br/>
+> Submitting a single `.cpp` was a requirement of the course.
 
 ## Run
 
