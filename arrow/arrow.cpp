@@ -1,13 +1,4 @@
-/*********
-CTIS164 - Template Source Program
-----------
-STUDENT :
-SECTION :
-HOMEWORK:
-----------
-PROBLEMS: If your program does not function correctly,
-explain here which parts are not running.
-*********/
+#define GLUT_DISABLE_ATEXIT_HACK
 
 #include <GL/glut.h>
 #include <stdio.h>
@@ -343,7 +334,7 @@ void Init() {
 	glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA);
 }
 
-void main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
 	glutInitWindowSize(WINDOW_WIDTH, WINDOW_HEIGHT);
@@ -376,4 +367,6 @@ void main(int argc, char *argv[]) {
 	Init();
 
 	glutMainLoop();
+	
+	return 0;
 }

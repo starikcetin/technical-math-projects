@@ -1,13 +1,11 @@
-# Projects for CTIS 164
-The projects I made for the CTIS 164 - Technical Mathematics with Programming course.
+# technical-math-projects
 
-I normally don't like putting everything into a single file, however this was a requirement of the course: 
-They wanted us to send a single .cpp file only for each project.
+The projects I made for the CTIS 164 Technical Mathematics with Programming.
 
-You need to have GLUT and OpenGL installed in order to run any of the projects.
+Note: Submitting a single `.cpp` was a requirement of the course.
 
-----
+## Play
 
-MIT licence. Refer to the [LICENCE](/LICENSE) file.
-
-Copyright (c) 2018 S. Tarık Çetin
+1. Download `starikcetin-technical-math-projects.zip`. Extract it.
+2. Read the `README.txt` file in the archive.
+3. Run the executables.

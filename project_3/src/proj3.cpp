@@ -1,21 +1,4 @@
-/*
-
-CTIS164
-----------
-STUDENT : S. Tarýk Çetin
-SECTION : 1
-HOMEWORK: 3
-----------
-ADDITIONAL FEATURES:
-
-- Aim line: A white line from gun to mouse pointer
-- Aim point A small circle on mouse pointer
-
-*/
-
-
-
-
+#define GLUT_DISABLE_ATEXIT_HACK
 
 //
 // Dependencies
@@ -1064,7 +1047,7 @@ void onClick(int button, int state, int x, int y)
 // Main
 //
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
@@ -1094,4 +1077,6 @@ void main(int argc, char *argv[])
 	glutTimerFunc(TIMER_PERIOD_GAME_UPDATE, onTimerTick_Game, 0);
 
 	glutMainLoop();
+	
+	return 0;
 }

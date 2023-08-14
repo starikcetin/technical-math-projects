@@ -1,42 +1,4 @@
-/*
-
-	 CTIS 164
-	----------
-
-	S. Tarýk Çetin
-	21702765
-	Section 1
-	Homework #2
-
-	----------
-
-	Features which I took the liberty of implementing:
-
-	+ Rocket exhausts. Uses a particle system that spawns circles.
-		+ Particles' green color component increases over time while red stays same, this creates a from red to yellow color change.
-		+ Particles' size decrease over time, this creates a rocket flame effect.
-
-	+ Bullet trail. Uses a particle system that spawns circles.
-		+ Particles' alpha color component decrease over time, this creates a fading trail effect.
-		+ Particles' size decrease over time slightly, just like with real AA shells.
-
-	+ Gradient sky background.
-
-	+ Targets (rockets) randomize their Y coordinate on each spawn.
-
-	+ Frame rate independent movement: My update methods use deltaTime which I measure independently from the frame rate. This provides smooth and deterministic movement.
-
-	+ Console reports: 
-		+ Collision detector reports details of hits to console.
-		+ Session controller reports end of sessions to console.
-
-	+ Almost all game parameters are in define statements. I tried to minimize hard-coding.
-
-*/
-
-
-
-
+#define GLUT_DISABLE_ATEXIT_HACK
 
 //
 // Dependencies
@@ -189,12 +151,16 @@ typedef struct
 
 typedef struct
 {
+	// pivot position
 	vector2_t pivotPos;
+
+	// is the rocket alive?
 	bool alive;
+
+	// has he rocket been counted towards total rockets since last spawn?
 	bool counted;
 
 	particleSystem_t exhaustPS;
-
 } rocket_t;
 
 
@@ -768,7 +734,7 @@ void drawBackgrounds_ExceptGameArea()
 
 
 	// grass rgb(68, 189, 50)
-	glColor3ub(78, 189, 60);
+	glColor3ub(68, 179, 50);
 	glRectd(WINDOW_LEFT, GR_TOP, WINDOW_RIGHT, GR_BOT);
 }
 
@@ -823,38 +789,38 @@ void drawTank(vector2_t pivot)
 	
 
 	glBegin(GL_POLYGON);
-	glVertex2d(-50	+ pivot.x,	10 + pivot.y);
-	glVertex2d(-50	+ pivot.x,	30 + pivot.y);
-	glVertex2d(-35	+ pivot.x,	40 + pivot.y);
-	glVertex2d(35	+ pivot.x,	40 + pivot.y);
-	glVertex2d(50	+ pivot.x,	30 + pivot.y);
-	glVertex2d(50	+ pivot.x,	10 + pivot.y);
+	glVertex2d(-50	+ pivot.x,	15 + pivot.y);
+	glVertex2d(-50	+ pivot.x,	35 + pivot.y);
+	glVertex2d(-35	+ pivot.x,	45 + pivot.y);
+	glVertex2d(35	+ pivot.x,	45 + pivot.y);
+	glVertex2d(50	+ pivot.x,	35 + pivot.y);
+	glVertex2d(50	+ pivot.x,	15 + pivot.y);
 	glEnd();
 
 	//gun
 	
 	glColor3ub(158, 154, 117);
 
-	glRectd(-20	+ pivot.x,	50	+ pivot.y,
-			-5	+ pivot.x,	40	+ pivot.y);
+	glRectd(-20	+ pivot.x,	55	+ pivot.y,
+			-5	+ pivot.x,	45	+ pivot.y);
 
 	glColor3ub(65, 83, 59);
 
-	glRectd(-5	+ pivot.x,	100	+ pivot.y,
-			15	+ pivot.x,	40	+ pivot.y);
+	glRectd(-5	+ pivot.x,	105	+ pivot.y,
+			15	+ pivot.x,	45	+ pivot.y);
 
 	//wheels
 	glColor3ub(28, 34, 46);
 
-	drawCircle(-35 + pivot.x, 5 + pivot.y, 10);
-	drawCircle(0 + pivot.x, 5 + pivot.y, 10);
-	drawCircle(35 + pivot.x, 5 + pivot.y, 10);
+	drawCircle(-35 + pivot.x, 10 + pivot.y, 10);
+	drawCircle(0 + pivot.x, 10 + pivot.y, 10);
+	drawCircle(35 + pivot.x, 10 + pivot.y, 10);
 
 	glColor3ub(65, 153, 59);
 
-	drawCircle(-35 + pivot.x, 5 + pivot.y, 2);
-	drawCircle(0 + pivot.x, 5 + pivot.y, 2);
-	drawCircle(35 + pivot.x, 5 + pivot.y, 2);
+	drawCircle(-35 + pivot.x, 10 + pivot.y, 2);
+	drawCircle(0 + pivot.x, 10 + pivot.y, 2);
+	drawCircle(35 + pivot.x, 10 + pivot.y, 2);
 }
 
 // pivot of rocket is it's bottom, 
@@ -1205,7 +1171,7 @@ void onTimerTick_Game(const int v)
 // Main
 //
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	glutInit(&argc, argv);
 	glutInitDisplayMode(GLUT_RGB | GLUT_DOUBLE);
@@ -1233,4 +1199,6 @@ void main(int argc, char *argv[])
 	glutTimerFunc(TIMER_PERIOD_GAME_UPDATE, onTimerTick_Game, 0);
 
 	glutMainLoop();
+	
+	return 0;
 }

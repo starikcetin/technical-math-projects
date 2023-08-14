@@ -1,45 +1,4 @@
-/*
-
-CTIS164
-----------
-STUDENT : S. Tarýk Çetin
-SECTION : 1
-HOMEWORK: 4
-----------
-ADDITIONAL FEATURES:
-
-1. Fixed a bug that exists both in the example executable and the code on Moodle 
-   that causes the colors to go negative and cause some colors to appear on the 
-   wrong side of the objects:
-	 
-        Both the dot product and distance effect may return negative numbers. 
-           
-        If only one of them is negative, the color goes negative, you can observe 
-        this in the example executable if you stop the animation when a red light is 
-        near the sun while the other lights are off, you will notice some blue-ish 
-        tint on the edges of white color on the planets.
-           
-        Even worse, if both dot product and distance effect are negative, this
-        results in positive colors and these positive colors appear on the wrong 
-        side of the planet.
-           
-        To solve both of these bugs, I clamped both the dot product and distance 
-        effect to make sure they stay at 0 instead of going negative. This way, the 
-        negative color artifacts and color on the wrong side bugs are fixed.
-    
-2. Button state labels change color (red/green) depending on the state of the action 
-   that they toggle.
-   
-3. Adjustable light range displayed at the top right corner of the screen.
-   
-4. Toggleable unlit color between grey and black. Displayed at the top right corner
-   of the screen. Label also changes color between red and green depending on the state.
-
-*/
-
-
-
-
+#define GLUT_DISABLE_ATEXIT_HACK
 
 //
 // Dependencies
@@ -54,8 +13,6 @@ ADDITIONAL FEATURES:
 #include <random>
 #include <GL/glut.h>
 
-#include "vec.h"
-
 
 
 
@@ -64,6 +21,8 @@ ADDITIONAL FEATURES:
 // Constants
 //
 
+#define V_D2R 0.0174532
+#define V_R2D 57.29608323
 #define PI 3.1415
 
 // The time passed in milliseconds since the beginning of the application
@@ -119,10 +78,17 @@ ADDITIONAL FEATURES:
 
 
 
-
 //
 // Custom Type Definitions
 //
+
+typedef struct {
+	double x, y;
+} vec_t;
+
+typedef struct {
+	double magnitude, angle;
+} polar_t;
 
 typedef struct
 {
@@ -176,6 +142,52 @@ double m_lightRange = INITIAL_LIGHT_RANGE;
 //
 // Utility Functions
 //
+
+double magV(vec_t v) {
+	return sqrt(v.x * v.x + v.y * v.y);
+}
+
+double angleV(vec_t v) {
+	double angle = atan2(v.y, v.x) * V_R2D;
+	return angle < 0 ? angle + 360 : angle;
+}
+
+vec_t addV(vec_t v1, vec_t v2) {
+	return{ v1.x + v2.x, v1.y + v2.y };
+}
+
+vec_t subV(vec_t v1, vec_t v2) {
+	return{ v1.x - v2.x, v1.y - v2.y };
+}
+
+vec_t mulV(double k, vec_t v) {
+	return{ k * v.x, k * v.y };
+}
+
+double dotP(vec_t v1, vec_t v2) {
+	return v1.x * v2.x + v1.y * v2.y;
+}
+
+vec_t unitV(vec_t v) {
+	return mulV(1.0 / magV(v), v);
+}
+
+// convert from polar representation to rectangular representation
+vec_t pol2rec(polar_t p) {
+	return{ p.magnitude * cos(p.angle * V_D2R),  p.magnitude * sin(p.angle * V_D2R) };
+}
+
+polar_t rec2pol(vec_t v) {
+	return{ magV(v), angleV(v) };
+}
+
+double angleBetween2V(vec_t v1, vec_t v2) {
+	double magV1 = magV(v1);
+	double magV2 = magV(v2);
+	double dot = dotP(v1, v2);
+	double angle = acos(dot / (magV1 * magV2)) * V_R2D; // in degree
+	return angle;
+}
 
 // converts 'value' from (aMin-aMax) to (bMin-bMax) range, keeps the ratio.
 double rangeConversion(const double value, const double aMin, const double aMax, const double bMin, const double bMax)
@@ -817,7 +829,7 @@ void onSpecialKeyDown(int key, int x, int y)
 // Main
 //
 
-void main(int argc, char *argv[])
+int main(int argc, char *argv[])
 {
 	srand(time(0));
 
@@ -845,4 +857,6 @@ void main(int argc, char *argv[])
 	glutTimerFunc(TIMER_PERIOD, onTimerTick_Game, 0);
 
 	glutMainLoop();
+	
+	return 0;
 }
